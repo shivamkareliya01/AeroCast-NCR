@@ -72,3 +72,34 @@ def test_wrf_chem_stub_api():
     assert response.status_code == 200
     data = response.json()
     assert data["status"] == "research_not_yet_operational"
+
+def test_simulator_evaluate_api():
+    response = client.get("/api/simulator/evaluate?stubble_reduction_pct=50&traffic_curb_pct=30")
+    assert response.status_code == 200
+    data = response.json()
+    assert "summary" in data
+    assert "simulated_timeline" in data
+    assert data["summary"]["net_pm25_reduction"] >= 0
+
+def test_extreme_risk_api():
+    response = client.get("/api/alerts/extreme-risk")
+    assert response.status_code == 200
+    data = response.json()
+    assert "probability_severe_plus_24h" in data
+    assert "extreme_risk_level" in data
+
+def test_routes_evaluate_api():
+    response = client.get("/api/routes/evaluate")
+    assert response.status_code == 200
+    data = response.json()
+    assert "express_route" in data
+    assert "clean_corridor_route" in data
+    assert "health_impact" in data
+
+def test_shap_waterfall_api():
+    response = client.get("/api/explainability/shap-waterfall?horizon=+24h")
+    assert response.status_code == 200
+    data = response.json()
+    assert "forces" in data
+    assert len(data["forces"]) >= 4
+

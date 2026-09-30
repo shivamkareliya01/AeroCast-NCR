@@ -9,7 +9,8 @@ import {
   ExclamationTriangleIcon,
   BeakerIcon,
   DocumentTextIcon,
-  ShieldCheckIcon
+  ShieldCheckIcon,
+  AdjustmentsHorizontalIcon
 } from '@heroicons/react/24/outline'
 
 const monitorItems = [
@@ -23,6 +24,7 @@ const monitorItems = [
 ]
 
 const analysisItems = [
+  { path: '/simulator', label: 'Policy Sandbox', icon: AdjustmentsHorizontalIcon },
   { path: '/validation', label: 'Model Validation', icon: BeakerIcon },
   { path: '/terms', label: 'Terms of Service', icon: DocumentTextIcon },
   { path: '/privacy', label: 'Privacy Policy', icon: ShieldCheckIcon }

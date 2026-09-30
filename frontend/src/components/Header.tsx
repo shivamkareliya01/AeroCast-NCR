@@ -1,15 +1,26 @@
-import { MapPinIcon, BellIcon } from '@heroicons/react/24/outline'
+import { MapPinIcon, BellIcon, DocumentArrowDownIcon } from '@heroicons/react/24/outline'
 
 interface HeaderProps {
   onRefresh: () => void
   loading: boolean
   onOpenWrfModal: () => void
+  onOpenBulletinModal: () => void
 }
 
-export default function Header({ onRefresh, loading, onOpenWrfModal }: HeaderProps) {
+export default function Header({ onRefresh, loading, onOpenWrfModal, onOpenBulletinModal }: HeaderProps) {
   return (
     <header className="h-20 bg-page flex items-center justify-end px-8 sticky top-0 z-30">
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-4">
+        {/* Export Bulletin Button */}
+        <button
+          onClick={onOpenBulletinModal}
+          className="flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-borderSubtle bg-surface text-[12px] font-medium text-textMain hover:bg-[#f4f4f5] transition-colors shadow-sm"
+          title="Export Official NCMRWF/CPCB Environmental Bulletin"
+        >
+          <DocumentArrowDownIcon className="w-4 h-4 text-[#0ea5e9]" strokeWidth={1.5} />
+          <span>Export Bulletin (PDF)</span>
+        </button>
+
         {/* Location Dropdown */}
         <button className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-borderSubtle bg-surface text-[12px] font-medium text-textMain hover:bg-[#f4f4f5] transition-colors">
           <MapPinIcon className="w-4 h-4 text-textMuted" strokeWidth={1.5} />

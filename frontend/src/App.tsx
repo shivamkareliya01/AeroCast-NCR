@@ -12,6 +12,8 @@ import AlertsPage from './pages/AlertsPage'
 import ValidationPage from './pages/ValidationPage'
 import TermsPage from './pages/TermsPage'
 import PrivacyPage from './pages/PrivacyPage'
+import PolicySimulatorPage from './pages/PolicySimulatorPage'
+import BulletinModal from './components/BulletinModal'
 import {
   fetch72hForecast, fetchDiagnostics, fetchStubbleRisk, fetchValidationMetrics, fetchAlertsHistory, fetchWrfStub,
   ForecastData, DiagnosticData, StubbleRiskData, ValidationMetricsData, AlertsHistoryData, WrfStubData
@@ -26,6 +28,7 @@ export default function App() {
   const [wrfStub, setWrfStub] = useState<WrfStubData | null>(null)
   const [loading, setLoading] = useState(true)
   const [showWrfModal, setShowWrfModal] = useState(false)
+  const [showBulletinModal, setShowBulletinModal] = useState(false)
 
   const loadAllData = async () => {
     setLoading(true)
@@ -65,6 +68,7 @@ export default function App() {
             onRefresh={loadAllData}
             loading={loading}
             onOpenWrfModal={() => setShowWrfModal(true)}
+            onOpenBulletinModal={() => setShowBulletinModal(true)}
           />
 
           <main className="flex-1 overflow-y-auto bg-page relative">
@@ -76,6 +80,7 @@ export default function App() {
               <Route path="/stubble" element={<StubblePage risk={risk} loading={loading} />} />
               <Route path="/explainability" element={<ExplainabilityPage diagnostics={diagnostics} forecast={forecast} loading={loading} />} />
               <Route path="/alerts" element={<AlertsPage alerts={alerts} loading={loading} />} />
+              <Route path="/simulator" element={<PolicySimulatorPage />} />
               <Route path="/validation" element={<ValidationPage validation={validation} loading={loading} />} />
               <Route path="/terms" element={<TermsPage />} />
               <Route path="/privacy" element={<PrivacyPage />} />
@@ -114,6 +119,16 @@ export default function App() {
             </div>
           </div>
         )}
+
+        {/* Official Environmental Bulletin Modal */}
+        <BulletinModal
+          isOpen={showBulletinModal}
+          onClose={() => setShowBulletinModal(false)}
+          forecast={forecast}
+          diagnostics={diagnostics}
+          risk={risk}
+          alerts={alerts}
+        />
       </div>
     </BrowserRouter>
   )
